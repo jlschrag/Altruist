@@ -1,0 +1,69 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: __TEMPLATE_PROJECT_NAME__-prometheus
+    volumes:
+      - ./src/app/prometheus_metrics/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - metrics-promaggregationgateway
+    networks:
+      - __TEMPLATE_PROJECT_NAME__-network
+    profiles: [dependency_only]
+
+  metrics-promaggregationgateway:
+    image: ghcr.io/zapier/prom-aggregation-gateway:v0.9.0
+    container_name: __TEMPLATE_PROJECT_NAME__-prom-aggregation-gateway
+    ports:
+      - 9091:80
+    command:
+      - "--apiListen=:80"
+    networks:
+      - __TEMPLATE_PROJECT_NAME__-network
+    profiles: [dependency_only]
+
+  __TEMPLATE_PROJECT_NAME__-backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: __TEMPLATE_PROJECT_NAME__-backend
+    image: __TEMPLATE_PROJECT_NAME__-backend:v${GIT_COMMIT:-notSetted}
+    restart: on-failure
+    ports:
+      - 8085:8085
+    environment:
+      PROMETHEUS_PROMAGGREGATIONGATEWAY_URL: "http://__TEMPLATE_PROJECT_NAME__-prom-aggregation-gateway"
+      REDIS_HOST: "__TEMPLATE_PROJECT_NAME__-redis"
+    networks:
+      - __TEMPLATE_PROJECT_NAME__-network
+    profiles: [backend]
+
+  dozzle:
+    container_name: __TEMPLATE_PROJECT_NAME__-dozzle
+    image: ghcr.io/amir20/dozzle:v8.12.3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 8089:8080
+    profiles: [dependency_only]
+
+  __TEMPLATE_PROJECT_NAME__-redis:
+    image: redis:7
+    container_name: __TEMPLATE_PROJECT_NAME__-redis
+    ports:
+      - 6379:6379
+    networks:
+      - __TEMPLATE_PROJECT_NAME__-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    profiles: [dependency_only]
+
+networks:
+  __TEMPLATE_PROJECT_NAME__-network:
+    driver: bridge
+    name: __TEMPLATE_PROJECT_NAME__-network

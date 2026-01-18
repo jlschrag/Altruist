@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingressClassName: nginx
+  name: __TEMPLATE_PROJECT_NAME__-ingress
+  namespace: __TEMPLATE_PROJECT_NAME__
+spec:
+  rules:
+    - host: __TEMPLATE_PROJECT_NAME__.tst.com
+      http:
+        paths:          
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: __TEMPLATE_PROJECT_NAME__-service
+              port: 
+                number: 8085
+  tls:
+    - hosts:
+        - __TEMPLATE_PROJECT_NAME__.tst.com
+
+
+#nginx namespace is out of __TEMPLATE_PROJECT_NAME__ namespace
