@@ -13,4 +13,4 @@ def push_metrics():
     All metrics will be labeled with the provided `job_name`
     """
     if PROMAGGREGATIONGATEWAY_URL:
-        push_to_gateway(PROMAGGREGATIONGATEWAY_URL, job="__TEMPLATE_PROJECT_NAME__-service", registry=registry)
+        push_to_gateway(PROMAGGREGATIONGATEWAY_URL, job="altruist-service", registry=registry)

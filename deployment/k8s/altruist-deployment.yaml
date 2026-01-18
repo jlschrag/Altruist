@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: altruist-service
+  namespace: altruist
+spec:
+  ports:
+  - port: 8085
+    name: http
+  type: LoadBalancer
+  selector:
+    app: altruist-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: altruist-service
+  namespace: altruist
+spec:
+  selector:
+    matchLabels:
+      app: altruist-service
+  template:
+    metadata:
+      labels:
+        app: altruist-service
+    spec:
+      containers:
+      - name: altruist-service
+        image: altruist-service
+        ports:
+        - containerPort: 8085
+        env:
+        - name: PROMETHEUS_PROMAGGREGATIONGATEWAY_URL
+          value: "altruist-prom-aggregation-gateway:9091"
+        - name: REDIS_HOST
+          value: "altruist-redis"
+        - name: REDIS_PORT
+          value: "6379"
+
+#### deploy on the same network

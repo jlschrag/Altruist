@@ -1,16 +1,16 @@
 apiVersion: skaffold/v4beta11
 kind: Config
 metadata:
-  name: __TEMPLATE_PROJECT_NAME__-service
+  name: altruist-service
 build:
   artifacts:
-    - image: __TEMPLATE_PROJECT_NAME__-service
+    - image: altruist-service
       docker:
         dockerfile: Dockerfile
 manifests:
   rawYaml:
     - deployment/k8s/namespace-config.yaml
-    - deployment/k8s/__TEMPLATE_PROJECT_NAME__-deployment.yaml
+    - deployment/k8s/altruist-deployment.yaml
     - deployment/k8s/storage/redis-deployment.yaml
     - deployment/k8s/observability/*.yaml
     #- deployment/k8s/hpa/*.yaml #Experimental Only

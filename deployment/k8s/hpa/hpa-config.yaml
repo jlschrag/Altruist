@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: __TEMPLATE_PROJECT_NAME__-service
-  namespace: __TEMPLATE_PROJECT_NAME__
+  name: altruist-service
+  namespace: altruist
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: __TEMPLATE_PROJECT_NAME__-service
+    name: altruist-service
   minReplicas: 1
   maxReplicas: 10
   metrics:

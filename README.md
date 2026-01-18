@@ -1,4 +1,4 @@
-# __TEMPLATE_PROJECT_NAME__
+# altruist
 
 
 # Getting Started
@@ -92,11 +92,11 @@ run `sh runDocker.sh -h`
 ## API access and swagger
 After application is running:
 
-run `curl -X 'GET' 'http://localhost:8085/__TEMPLATE_PROJECT_NAME__/api/v1/health' -H 'accept: application/json'`
+run `curl -X 'GET' 'http://localhost:8085/altruist/api/v1/health' -H 'accept: application/json'`
 
 or
 
-Visit: [ http://localhost:8085/__TEMPLATE_PROJECT_NAME__/api/v1/docs]( http://localhost:8085/__TEMPLATE_PROJECT_NAME__/api/v1/docs) to see the auto generated swagger docs and muck around with it a bit.
+Visit: [ http://localhost:8085/altruist/api/v1/docs]( http://localhost:8085/altruist/api/v1/docs) to see the auto generated swagger docs and muck around with it a bit.
 
 <BR><BR>
 

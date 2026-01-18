@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: __TEMPLATE_PROJECT_NAME__-prometheus
-  namespace: __TEMPLATE_PROJECT_NAME__
+  name: altruist-prometheus
+  namespace: altruist
 spec:
   ports:
    - name: "9090"
@@ -10,28 +10,28 @@ spec:
      targetPort: 9090
   type: ClusterIP
   selector:
-    app: __TEMPLATE_PROJECT_NAME__-prometheus
+    app: altruist-prometheus
 
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: __TEMPLATE_PROJECT_NAME__-prometheus
-  namespace: __TEMPLATE_PROJECT_NAME__
+  name: altruist-prometheus
+  namespace: altruist
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: __TEMPLATE_PROJECT_NAME__-prometheus
+      app: altruist-prometheus
   template:
     metadata:
       labels:
-        app: __TEMPLATE_PROJECT_NAME__-prometheus
+        app: altruist-prometheus
     spec:   
       containers:
       - image: prom/prometheus #missing version
-        name: __TEMPLATE_PROJECT_NAME__-prometheus
+        name: altruist-prometheus
         ports:
           - containerPort: 9090
             protocol: TCP

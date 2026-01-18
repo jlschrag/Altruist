@@ -26,7 +26,7 @@ Responsibilities:
     Map the service layer output to outbound responses using schema DTOs and ViewModels.
 """
 
-router = APIRouter(prefix="/__TEMPLATE_PROJECT_NAME__/api/v1")
+router = APIRouter(prefix="/altruist/api/v1")
 
 @router.get("/")
 async def root(fail: str = None):

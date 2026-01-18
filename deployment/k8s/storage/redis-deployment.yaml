@@ -1,30 +1,30 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: __TEMPLATE_PROJECT_NAME__-redis
-  namespace: __TEMPLATE_PROJECT_NAME__
+  name: altruist-redis
+  namespace: altruist
 spec:
   ports:
     - port: 6379
   selector:
-    app: __TEMPLATE_PROJECT_NAME__-redis
+    app: altruist-redis
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: __TEMPLATE_PROJECT_NAME__-redis
-  namespace: __TEMPLATE_PROJECT_NAME__
+  name: altruist-redis
+  namespace: altruist
 spec:
   selector:
     matchLabels:
-      app: __TEMPLATE_PROJECT_NAME__-redis
+      app: altruist-redis
   template:
     metadata:
       labels:
-        app: __TEMPLATE_PROJECT_NAME__-redis
+        app: altruist-redis
     spec:
       containers:
-        - name: __TEMPLATE_PROJECT_NAME__-redis
+        - name: altruist-redis
           image: redis:7
           imagePullPolicy: IfNotPresent
           ports:
